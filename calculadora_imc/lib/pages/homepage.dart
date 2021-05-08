@@ -1,4 +1,4 @@
-import 'package:calculadora_imc/core/app_images.dart';
+// import 'package:calculadora_imc/core/app_images.dart';
 import 'package:calculadora_imc/core/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -69,12 +69,12 @@ class _HomeState extends State<HomePage> {
         children: <Widget>[
           Column(
             children: [
-              Image.asset(
-                AppImages.balance,
-                fit: BoxFit.fill,
-                width: 150,
-                height: 150,
-              ),
+              // Image.asset(
+              //   AppImages.balance,
+              //   fit: BoxFit.fill,
+              //   width: 150,
+              //   height: 150,
+              // ),
             ],
           ),
           buildTextFormField(
@@ -85,35 +85,44 @@ class _HomeState extends State<HomePage> {
               label: 'Altura (cm)',
               error: 'Insira sua altura',
               controller: _heightController),
-          buildCalculateButton(),
+          SizedBox(
+            height: 12,
+          ),
           buildTextResult(),
+          buildCalculateButton(),
         ],
       ),
     );
   }
 
-  Padding buildCalculateButton() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 18),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.green,
-          onSurface: Colors.white,
-          elevation: 10,
+  buildCalculateButton() {
+    return Container(
+      height: 80,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 18, horizontal: 9),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.green,
+            onSurface: Colors.white,
+            elevation: 8,
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(50),
+            ),
+          ),
+          child: Text(
+            'Calcular',
+            style: AppTextStyles.bodyBold,
+          ),
+          onPressed: () {
+            setState(
+              () {
+                if (_formKey.currentState.validate()) {
+                  calculateImc();
+                }
+              },
+            );
+          },
         ),
-        child: Text(
-          'Calcular',
-          style: AppTextStyles.bodyBold,
-        ),
-        onPressed: () {
-          setState(
-            () {
-              if (_formKey.currentState.validate()) {
-                calculateImc();
-              }
-            },
-          );
-        },
       ),
     );
   }
@@ -149,17 +158,17 @@ class _HomeState extends State<HomePage> {
       () {
         _result = "IMC = ${imc.toStringAsPrecision(2)}\n";
         if (imc < 18.6)
-          _result += "Imc menor que 18.6 – Abaixo do Peso";
+          _result += "Menor que 18.6 – Abaixo do Peso";
         else if (imc < 25.0)
-          _result += "Imc entre 18.6 e 24.9 – Peso ideal";
+          _result += "Entre 18.6 e 24.9 – Peso ideal";
         else if (imc < 30.0)
-          _result += "Imc entre 25 e 29.9 – Acima do Peso";
+          _result += "Entre 25 e 29.9 – Acima do Peso";
         else if (imc < 35.0)
-          _result += "Imc entre 30 e 34.9 – Obesidade grau I";
+          _result += "Entre 30 e 34.9 – Obesidade grau I";
         else if (imc < 40.0)
-          _result += "Imc entre 35 e 39.9 – Obesidade grau II";
+          _result += "Entre 35 e 39.9 – Obesidade grau II";
         else
-          _result += "Imc igual ou maior que 40 – Obesidade grau III";
+          _result += "Igual ou maior que 40 – Obesidade grau III";
       },
     );
   }
